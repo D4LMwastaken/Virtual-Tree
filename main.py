@@ -2,33 +2,18 @@
 """
 The main file
 """
-import os
 
-import requests
-from dotenv import load_dotenv
-import datetime
+import hackatime
 
-load_dotenv()
+# Constants
+Version = "V1.0.0"
 
-# Datetime
-today = datetime.date.today()
-midnight = datetime.time(0,0,0,0)
-endOfDay = datetime.time(23,59,59,59)
-
-slack_id = os.getenv("SLACK_ID")
-print(slack_id)
-startofday = datetime.datetime.combine(today,midnight)
-endofday = datetime.datetime.combine(today,endOfDay)
-
-
-api_url = f"https://hackatime.hackclub.com/api/v1/users/{slack_id}/stats?start_date=${startofday}&end_date=${endofday}"
-api_url_all = f"https://hackatime.hackclub.com/api/v1/users/{slack_id}/stats?"
-
-'''
-Appears that I use sometime like this: (thanks https://github.com/joysudo/catatime/blob/master/backend/index.js for helping me...)
-https://hackatime.hackclub.com/api/v1/users/${slack_id}/stats?start_date=${startofday}&end_date=${endofday}
-'''
-response = requests.get(api_url)
-response_all = requests.get(api_url_all)
-print(response.json())
-print(response_all.json())
+print("Virtual Tree by D4LM")
+print("Version:",Version)
+print("Would you like to create a virtual tree for all your time or just for today?")
+print("[1] All your time")
+print("[2] Today's time")
+if input("> ").lower() == "1":
+    print("Since you started using HackaTime, you spent", hackatime.get_time_all())
+elif input("> ").lower() == "2":
+    print("Today you spent", hackatime.get_time_today())

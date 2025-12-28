@@ -38,12 +38,14 @@ def get_time_today():
     """
     Returns the amount of time you spend working on HackClub today
     """
-    api_url = f"https://hackatime.hackclub.com/api/v1/users/{get_slack_id()}/stats?start_date=${get_start_of_day()}&end_date=${get_end_of_day()}"
+    api_url = f"https://hackatime.hackclub.com/api/v1/users/{get_slack_id()}/stats?start_date={get_start_of_day()}&end_date={get_end_of_day()}"
     response = requests.get(api_url).json()
-    return response["human_readable_total"]
+    return response["data"]["human_readable_total"]
 
 def get_time_all():
     """
-    
-    :return:
+    Returns all the time you spent working on HackClub
     """
+    api_url_all = f"https://hackatime.hackclub.com/api/v1/users/{get_slack_id()}/stats?"
+    response = requests.get(api_url_all).json()
+    return response["data"]["human_readable_total"]
